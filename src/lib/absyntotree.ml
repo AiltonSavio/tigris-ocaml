@@ -13,6 +13,8 @@ let string_of_oper = function
   | MinusOp -> "-"
   | TimesOp -> "*"
   | DivOp   -> "/"
+  | ModOp   -> "%"
+  | PowOp   -> "^"
   | EqOp    -> "="
   | NeOp    -> "<>"
   | LtOp    -> "<"
@@ -59,10 +61,12 @@ let rec tree_of_exp exp =
   | VarExp v           -> mktr "VarExp" [tree_of_lvar v]
   | AssignExp (v,e)    -> mktr "AssignExp" [tree_of_lvar v; tree_of_lexp e]
   | CallExp (f,xs)     -> mktr "CallExp" [mkt (name f) []; mkt "Args" (map tree_of_lexp xs)]
+  | MinExp (op, e)     -> mktr ("OpExp " ^ string_of_oper op) [tree_of_lexp e]
   | OpExp (op,e1,e2)   -> mktr ("OpExp " ^ string_of_oper op) [tree_of_lexp e1; tree_of_lexp e2]
   | IfExp (cond,e1,e2) -> mktr "IfExp" [tree_of_lexp cond; tree_of_lexp e1; tree_of_option tree_of_lexp e2]
   | WhileExp (cond,e)  -> mktr "WhileExp" [tree_of_lexp cond; tree_of_lexp e]
   | BreakExp           -> mktr "BreakExp" []
+  | EndExp             -> mktr "EndExp" []
   | SeqExp es          -> mktr "SeqExp" (map tree_of_lexp es)
   | LetExp (ds,e)      -> mktr "LetExp" [mkt "Decls" (map tree_of_ldec ds); tree_of_lexp e]
 

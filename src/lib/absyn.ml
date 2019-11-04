@@ -5,7 +5,7 @@ open Location
 module S = Symbol
 
 type operator =
-  | PlusOp | MinusOp | TimesOp | DivOp
+  | PlusOp | MinusOp | TimesOp | DivOp | ModOp | PowOp
   | EqOp | NeOp
   | LtOp | LeOp | GtOp | GeOp
   | OrOp | AndOp
@@ -22,10 +22,12 @@ type exp =
   | VarExp    of lvar
   | AssignExp of lvar * lexp
   | CallExp   of S.symbol * lexp list
+  | MinExp    of operator * lexp
   | OpExp     of operator * lexp * lexp
   | IfExp     of lexp * lexp * lexp option
   | WhileExp  of lexp * lexp
   | BreakExp
+  | EndExp
   | SeqExp    of lexp list
   | LetExp    of ldec list * lexp
   [@@deriving show]

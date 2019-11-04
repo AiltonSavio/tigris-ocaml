@@ -1,0 +1,8 @@
+{# cálculo do índice de massa corporal #}
+
+let
+    var peso: real := 67.9
+    var altura: real := 1.72
+in
+    printreal(peso / altura ^ 2
+end
